@@ -4,34 +4,51 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("> ");
-        var command = Console.ReadLine();
 
-        do{
+        ToDoService todoService = new ToDoService();
 
-           if(command == "add")
+        while(true){
+
+            Console.WriteLine("> ");
+            var command = Console.ReadLine();
+            string[] arg = string.IsNullOrWhiteSpace(command) 
+            ? Array.Empty<string>() 
+            : command.Split(' ', 2, StringSplitOptions.RemoveEmptyEntries);
+
+            if (string.IsNullOrWhiteSpace(command))
+                continue;
+
+            if (arg[0] == "exit")
+                break;
+
+           if(arg[0] == "add")
             {
-                //Do something
+                todoService.Add(arg[1]);
             }
-            else if(command == "update")
+            else if(arg[0] == "update")
             {
-                //Do something
+                string[] argument = arg[1].Split('/', 2, StringSplitOptions.RemoveEmptyEntries);
+                todoService.Update(argument[0], argument[1]);
             }
-            else if(command == "delete")
+            else if(arg[0] == "delete")
             {
-                //Do something
+                todoService.Remove(arg[1]);
             }
-            else if(command == "list")
+            else if(arg[0] == "list")
             {
-                //Do something
+                Console.WriteLine(todoService.GetAll());
             }
-            else if(command == "mark-in-progress")
+            else if(arg[0] == "mark-in-progress")
             {
-                //Do something
+                todoService.MarkInProgress(arg[1]);
             }
-            else if(command == "mark-done")
+            else if(arg[0] == "mark-pending")
             {
-                //Do something
+                todoService.MarkPending(arg[1]);
+            }
+            else if(arg[0] == "mark-done")
+            {
+                todoService.MarkDone(arg[1]);
             }
             else
             {
@@ -39,6 +56,6 @@ class Program
                 continue;
             }
 
-        }while(string.IsNullOrEmpty(command));
+        }
     }
 }

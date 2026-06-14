@@ -1,5 +1,5 @@
-enum ToDoStatus{
-    InProgress,
+public enum ToDoStatus{
+    ToDo,
     Completed,
     Pending
 };
